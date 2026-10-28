@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Veya: Learning that stays</title>
+    <meta name="description" content="Veya is your own learning space that talks with you, asks you back, and remembers where you left off. So what you learn actually sticks." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Veya: Learning that stays" />
+    <meta property="og:description" content="A more personal way to learn. Veya talks with you, asks you back, and remembers where you left off." />
+    <meta property="og:site_name" content="Veya" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Veya: Learning that stays" />
+    <meta name="theme-color" content="#F5EDE7" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap" />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      /* ============================================================
+         VEYA BRAND: edit colors and fonts here
+         ============================================================ */
+      :root {
+        --navy: #0b1f3b;      /* main ink, dark sections */
+        --indigo: #4f46e5;    /* primary buttons, accents */
+        --indigo-deep: #4338ca;
+        --sage: #10b981;      /* secondary accent, small highlights */
+        --lavender: #e9e7ff;
+        --sand: #f5ede7;      /* page background */
+        --sand-deep: #ede2d9;
+        --slate: #64748b;     /* muted text (on sand, use --slate-ink for 4.5:1) */
+        --slate-ink: #55657a;
+        --charcoal: #1f2937;  /* body text */
+        --white: #ffffff;
+        --brand-gradient: linear-gradient(90deg, var(--indigo), var(--sage));
+
+        --font-head: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+        /* Map the brand onto the base kit's tokens, light only */
+        color-scheme: light;
+        --sans: var(--font-body);
+        --text-primary: var(--charcoal);
+        --text-secondary: var(--slate-ink);
+        --fill-primary: var(--navy);
+        --text-primary-on: var(--white);
+        --fill-primary-on: var(--sand);
+        --fill-tertiary: var(--sand-deep);
+        --stroke-primary: rgb(11 31 59 / 0.16);
+        --stroke-secondary: rgb(11 31 59 / 0.08);
+
+        --x-wrap: 1120px;
+        --x-band-pad: clamp(72px, 11vw, 140px);
+      }
+
+      body { background: var(--sand); color: var(--charcoal); font: 400 17px/1.6 var(--font-body); }
+      .page { padding-block: 0; gap: 0; }
+      .main { gap: 0; }
+      :focus-visible { outline-color: var(--indigo); }
+
+      /* ---------- type ---------- */
+      .x-h1, .x-h2, .x-h3, .x-big { font-family: var(--font-head); color: var(--navy); letter-spacing: -0.025em; }
+      .x-h1 { font-weight: 900; font-size: clamp(48px, 9vw, 104px); line-height: 0.98; }
+      .x-h2 { font-weight: 700; font-size: clamp(34px, 5.4vw, 60px); line-height: 1.05; max-width: 18ch; }
+      .x-h3 { font-weight: 700; font-size: clamp(20px, 2vw, 24px); line-height: 1.2; letter-spacing: -0.01em; }
+      .x-eyebrow { font: 600 13px/1.3 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--indigo); }
+      .x-lede { font-size: clamp(18px, 2vw, 22px); line-height: 1.55; max-width: 36ch; }
+      .x-body { max-width: 56ch; }
+      .x-body p + p { margin-top: 1em; }
+      .x-muted { color: var(--slate-ink); }
+      .x-aside { color: var(--slate-ink); font-style: italic; }
+
+      /* ---------- layout ---------- */
+      .x-band { margin-inline: calc(50% - 50vw); padding: var(--x-band-pad) var(--gutter); scroll-margin-top: 72px; }
+      .x-wrap { max-width: var(--x-wrap); margin: 0 auto; }
+      .x-stack > * + * { margin-top: clamp(20px, 2.6vw, 32px); }
+      .x-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+      @media (max-width: 860px) { .x-split { grid-template-columns: 1fr; } }
+
+      /* ---------- buttons ---------- */
+      .x-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+      .x-btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        min-height: 52px; padding: 0 26px; border-radius: 999px;
+        font: 600 16px/1 var(--font-body); text-decoration: none; white-space: nowrap;
+        transition: background var(--dur-quick) ease, color var(--dur-quick) ease, border-color var(--dur-quick) ease, transform var(--dur-quick) var(--ease-out);
+      }
+      .x-btn:active { transform: scale(0.98); }
+      .x-btn--primary { background: var(--indigo); color: var(--white); }
+      .x-btn--primary:hover { background: var(--brand-gradient); }
+      .x-btn--ghost { border: 1.5px solid currentColor; color: var(--navy); }
+      .x-btn--ghost:hover { background: rgb(11 31 59 / 0.06); }
+      .x-btn--light { border: 1.5px solid rgb(255 255 255 / 0.6); color: var(--white); }
+      .x-btn--light:hover { background: rgb(255 255 255 / 0.12); }
+      .x-btn--sm { min-height: 44px; padding: 0 18px; font-size: 15px; }
+
+      /* ---------- nav ---------- */
+      .x-nav {
+        position: sticky; top: 0; z-index: 50;
+        margin-inline: calc(50% - 50vw); padding: 10px var(--gutter);
+        background: rgb(245 237 231 / 0.86);
+        -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4);
+        border-bottom: 1px solid var(--stroke-secondary);
+      }
+      .x-nav__in { max-width: var(--x-wrap); margin: 0 auto; display: flex; align-items: center; gap: 28px; }
+      .x-logo { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+      .x-logo img { height: 34px; width: auto; clip-path: inset(0 3.2%); margin-inline: -4px; mix-blend-mode: multiply; }
+      .x-nav__links { display: flex; gap: 26px; margin-left: auto; }
+      .x-nav__links a { color: var(--navy); text-decoration: none; font-weight: 500; font-size: 15px; padding: 10px 0; }
+      .x-nav__links a:hover { color: var(--indigo); }
+      @media (max-width: 760px) {
+        .x-nav__links { display: none; }
+        .x-nav__in { justify-content: space-between; }
+        .x-logo img { height: 28px; }
+      }
+
+      /* ---------- hero ---------- */
+      .x-hero {
+        position: relative; isolation: isolate; overflow: hidden;
+        margin-inline: calc(50% - 50vw);
+        min-height: min(88vh, 820px);
+        display: flex; align-items: center;
+        padding: 96px var(--gutter);
+        color: var(--white);
+        background: var(--navy);
+      }
+      .x-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 40%; z-index: -2; }
+      .x-hero::after {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(90deg, rgb(11 31 59 / 0.88) 0%, rgb(11 31 59 / 0.62) 40%, rgb(11 31 59 / 0.08) 75%);
+      }
+      .x-hero .x-wrap { width: 100%; }
+      .x-hero__copy { max-width: 600px; }
+      .x-hero .x-eyebrow { color: #c7c3ff; }
+      .x-hero .x-h1 { color: var(--white); }
+      .x-hero .x-lede { color: rgb(255 255 255 / 0.9); max-width: 34ch; }
+      @media (max-width: 760px) {
+        .x-hero { align-items: flex-end; min-height: 92vh; padding-top: 220px; padding-bottom: 48px; }
+        .x-hero__img { object-position: 72% 30%; }
+        .x-hero::after { background: linear-gradient(0deg, rgb(11 31 59 / 0.94) 0%, rgb(11 31 59 / 0.75) 50%, rgb(11 31 59 / 0.1) 85%); }
+      }
+
+      /* voice waveform */
+      .x-wave { display: inline-flex; align-items: center; gap: 4px; height: 32px; }
+      .x-wave span {
+        width: 4px; height: 100%; border-radius: 4px;
+        background: linear-gradient(180deg, var(--indigo), var(--sage));
+        transform-origin: center; animation: x-wave 1.4s ease-in-out infinite;
+      }
+      .x-hero .x-wave span { background: linear-gradient(180deg, #8b85ff, #34d399); }
+      .x-wave span:nth-child(2n) { animation-delay: -0.3s; }
+      .x-wave span:nth-child(3n) { animation-delay: -0.7s; }
+      .x-wave span:nth-child(5n) { animation-delay: -1.1s; }
+      .x-wave span:nth-child(4n+1) { animation-duration: 1.1s; }
+      @keyframes x-wave { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+      @media (prefers-reduced-motion: reduce) { .x-wave span { animation: none; transform: scaleY(0.6); } }
+
+      /* ---------- we believe ---------- */
+      .x-believe .x-h2 { max-width: 16ch; font-size: clamp(38px, 6.4vw, 76px); }
+      .x-cards { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
+      @media (max-width: 860px) { .x-cards { grid-template-columns: 1fr; } }
+      .x-card { border-radius: 28px; padding: clamp(28px, 4vw, 44px); background: var(--white); }
+      .x-card--stat { background: var(--navy); color: rgb(255 255 255 / 0.82); }
+      .x-stat-big { font-family: var(--font-head); font-weight: 900; letter-spacing: -0.03em; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.05; color: var(--white); }
+      .x-stat-big .x-up { color: #34d399; }
+      .x-stat-big .x-down { color: #a5a0ff; }
+      .x-card--stat p + p { margin-top: 20px; }
+      .x-cap { font-size: 15px; line-height: 1.55; }
+      .x-quote { font-family: var(--font-head); font-weight: 500; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.3; color: var(--navy); letter-spacing: -0.01em; }
+      .x-quote::before { content: "\201C"; display: block; font-weight: 900; font-size: 64px; line-height: 0.6; color: var(--indigo); margin-bottom: 12px; }
+      .x-punch { font-family: var(--font-head); font-weight: 700; font-size: clamp(28px, 3.6vw, 40px); color: var(--navy); letter-spacing: -0.02em; }
+      .x-punch em { font-style: normal; color: var(--indigo); background: var(--brand-gradient) left bottom / 100% 3px no-repeat; padding-bottom: 2px; }
+
+      /* ---------- how it works ---------- */
+      .x-how { background: var(--white); }
+      .x-photo { border-radius: 28px; overflow: hidden; aspect-ratio: 4 / 3; }
+      .x-photo img { width: 100%; height: 100%; object-fit: cover; }
+      .x-how .x-split { align-items: start; }
+      .x-how__media { position: sticky; top: 96px; }
+      .x-how__media .x-wave { margin-top: 20px; }
+      @media (max-width: 860px) { .x-how__media { position: static; } }
+      .x-steps { list-style: none; margin: 0; padding: 0; }
+      .x-steps li { display: grid; grid-template-columns: 56px 1fr; gap: 4px 16px; padding: 28px 0; border-top: 1px solid var(--stroke-secondary); }
+      .x-steps li:first-child { border-top: 0; padding-top: 0; }
+      .x-num {
+        grid-row: span 2; width: 44px; height: 44px; border-radius: 50%;
+        display: grid; place-items: center;
+        background: var(--lavender); color: var(--indigo);
+        font: 700 18px/1 var(--font-head);
+      }
+      .x-steps p { color: var(--charcoal); }
+
+      /* ---------- why voice (dark) ---------- */
+      .x-dark { background: var(--navy); color: rgb(255 255 255 / 0.84); }
+      .x-dark .x-h2 { color: var(--white); }
+      .x-dark .x-eyebrow { color: #6ee7b7; }
+      .x-dark .x-lede { color: rgb(255 255 255 / 0.88); max-width: 40ch; }
+
+      /* ---------- founder ---------- */
+      .x-story .x-body { font-size: clamp(18px, 1.8vw, 20px); line-height: 1.65; max-width: 60ch; }
+      .x-sign { display: flex; align-items: center; gap: 14px; }
+      .x-sign__line { width: 40px; height: 2px; background: var(--brand-gradient); border-radius: 2px; }
+      .x-sign b { font-family: var(--font-head); font-weight: 700; color: var(--navy); }
+
+      /* ---------- traction ---------- */
+      .x-traction { padding-top: 0; }
+      .x-nums { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--stroke-primary); }
+      .x-nums > div { padding: 32px 24px 8px 0; }
+      .x-nums b { display: block; font-family: var(--font-head); font-weight: 900; font-size: clamp(48px, 6.4vw, 80px); line-height: 1; letter-spacing: -0.04em; color: var(--navy); }
+      .x-nums span { display: block; margin-top: 12px; color: var(--slate-ink); font-size: 16px; max-width: 18ch; }
+      @media (max-width: 760px) { .x-nums { grid-template-columns: 1fr 1fr; } .x-nums > div { padding-right: 12px; } }
+
+      /* ---------- why now ---------- */
+      .x-now { background: var(--sand-deep); }
+      .x-now .x-h2 { max-width: 20ch; }
+
+      /* ---------- investors ---------- */
+      .x-invest-card { background: var(--lavender); border-radius: 32px; padding: clamp(32px, 6vw, 72px); }
+      .x-invest-card .x-eyebrow { color: var(--indigo-deep); }
+
+      /* ---------- final CTA ---------- */
+      .x-final { text-align: center; }
+      .x-final .x-h2 { margin-inline: auto; max-width: 16ch; font-size: clamp(40px, 7vw, 84px); font-weight: 900; }
+      .x-final .x-actions { justify-content: center; }
+      .x-final .x-wave { justify-content: center; }
+
+      /* ---------- footer ---------- */
+      .x-foot { margin-inline: calc(50% - 50vw); padding: 48px var(--gutter) 40px; border-top: 1px solid var(--stroke-secondary); }
+      .x-foot__in { max-width: var(--x-wrap); margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 24px 40px; align-items: center; }
+      .x-foot__links { display: flex; flex-wrap: wrap; gap: 4px 24px; justify-content: flex-end; }
+      .x-foot__links a { color: var(--navy); text-decoration: none; font-weight: 500; padding: 10px 0; display: inline-block; min-width: 44px; min-height: 44px; }
+      .x-foot__links a:hover { color: var(--indigo); }
+      .x-foot small { color: var(--slate-ink); font-size: 14px; }
+      @media (max-width: 760px) { .x-foot__in { grid-template-columns: 1fr; } .x-foot__links { justify-content: flex-start; } }
+
+      /* ---------- fade-in on scroll ---------- */
+      .js .x-reveal { opacity: 0; transform: translateY(18px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+      .js .x-reveal.is-in { opacity: 1; transform: none; }
+      @media (prefers-reduced-motion: reduce) { .js .x-reveal { opacity: 1; transform: none; transition: none; } }
+    </style>
+    <script>document.documentElement.classList.add("js");</script>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <!-- 1. Nav -->
+      <header class="x-nav">
+        <div class="x-nav__in">
+          <a class="x-logo" href="#top" aria-label="Veya home"><img src="veya_logo_clean.png" alt="Veya" width="1913" height="560" /></a>
+          <nav class="x-nav__links" aria-label="Main">
+            <a href="#how">How it works</a>
+            <a href="#voice">Why voice</a>
+            <a href="#investors">Investors</a>
+          </nav>
+          <a class="x-btn x-btn--primary x-btn--sm" href="mailto:dbosshonour@gmail.com?subject=Veya%20waitlist&amp;body=Hi%2C%20I%27d%20like%20early%20access%20to%20Veya">Join the waitlist</a>
+        </div>
+      </header>
+
+      <main class="main">
+        <!-- 2. Hero -->
+        <section class="x-hero">
+          <img class="x-hero__img" src="veya-hero2.png" alt="A young woman walking down a tree-lined street at golden hour, smiling at her phone" />
+          <div class="x-wrap">
+            <div class="x-hero__copy x-stack">
+              <p class="x-eyebrow">A more personal way to learn</p>
+              <h1 class="x-h1">Learning that stays.</h1>
+              <p class="x-lede">You can ask AI anything. Can you remember what it said? Veya is your own learning space that talks with you, asks you back, and remembers where you left off. So what you learn actually sticks.</p>
+              <div class="x-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="x-actions">
+                <a class="x-btn x-btn--primary" href="mailto:dbosshonour@gmail.com?subject=Veya%20waitlist&amp;body=Hi%2C%20I%27d%20like%20early%20access%20to%20Veya">Join the waitlist</a>
+                <a class="x-btn x-btn--light" href="#how">See how it works</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. We believe -->
+        <section class="x-band x-believe" id="believe">
+          <div class="x-wrap x-stack">
+            <p class="x-eyebrow x-reveal">We believe</p>
+            <h2 class="x-h2 x-reveal">Getting an answer isn't the same as knowing it.</h2>
+            <div class="x-body x-lede x-reveal">
+              <p>AI changed how we work, write and build. Learning got left behind. We believe getting an answer is not the same as understanding it. <span class="x-aside">(Ask anyone what ChatGPT told them last month. We'll wait.)</span></p>
+            </div>
+            <div class="x-cards x-reveal">
+              <div class="x-card x-card--stat">
+                <p class="x-stat-big"><span class="x-up">+48%</span> on practice. <span class="x-down">17% worse</span> once the AI was gone.</p>
+                <p class="x-cap">Around 1,000 high school students practised maths with ChatGPT. They did better while they had it, and worse than students who never used it once it was taken away. <br /><small>Bastani et al., PNAS, 2025.</small></p>
+              </div>
+              <div class="x-card">
+                <p class="x-quote">Andrew Ng has said the way most people use AI is terrible for learning, and that even he re-asks the same questions months later.</p>
+              </div>
+            </div>
+            <p class="x-punch x-reveal">We wanna <em>change that.</em></p>
+          </div>
+        </section>
+
+        <!-- 4. How it works -->
+        <section class="x-band x-how" id="how">
+          <div class="x-wrap x-stack">
+            <p class="x-eyebrow x-reveal">How it works</p>
+            <h2 class="x-h2 x-reveal">Tell it what you want to learn. It takes it from there.</h2>
+            <div class="x-split">
+              <div class="x-how__media x-reveal">
+                <figure class="x-photo"><img src="veya-talkback.png" alt="Two students on campus steps, one talking to her phone" /></figure>
+                <div class="x-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              </div>
+              <ol class="x-steps">
+                <li class="x-reveal"><span class="x-num">1</span><h3 class="x-h3">Tell Veya what and why.</h3><p>"I want to finally get statistics." "I have an exam in three weeks." Whatever it is.</p></li>
+                <li class="x-reveal"><span class="x-num">2</span><h3 class="x-h3">It builds your path.</h3><p>A personal curriculum, with each topic getting its own space.</p></li>
+                <li class="x-reveal"><span class="x-num">3</span><h3 class="x-h3">It talks you through it.</h3><p>Live voice you can interrupt, question and answer back. Like a patient friend who happens to know the subject.</p></li>
+                <li class="x-reveal"><span class="x-num">4</span><h3 class="x-h3">It remembers you.</h3><p>Veya keeps track of what you understand and where you stall, then decides what's next and makes the first move. Every session builds on the last.</p></li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Why voice -->
+        <section class="x-band x-dark" id="voice">
+          <div class="x-wrap x-split">
+            <div class="x-stack">
+              <p class="x-eyebrow x-reveal">Why voice</p>
+              <h2 class="x-h2 x-reveal">Learning shouldn't need a desk.</h2>
+              <p class="x-lede x-reveal">Voice first, because it's personal and it fits into the life you already have: the bus, the walk, the queue. Audio is where we start, not where we stop. Practice, projects and proof of what you can do come next.</p>
+            </div>
+            <figure class="x-photo x-reveal"><img src="veya-commute.png" alt="A man on a bus looking out the window at golden hour" /></figure>
+          </div>
+        </section>
+
+        <!-- 6. Founder story -->
+        <section class="x-band x-story" id="story">
+          <div class="x-wrap x-stack">
+            <p class="x-eyebrow x-reveal">Where it came from</p>
+            <h2 class="x-h2 x-reveal">It started with a course I nearly failed.</h2>
+            <div class="x-body x-reveal">
+              <p>I had a heavy AI course and way too much reading before exams. So I turned the material into audio and learned on the go, the way I listen to music and podcasts. I passed.</p>
+              <p>Then friends asked if they could pay for it. That's when I asked the real question: <strong>why does the learner always have to adapt to the format?</strong></p>
+            </div>
+            <p class="x-sign x-reveal"><span class="x-sign__line" aria-hidden="true"></span><span><b>Honour Onovae</b>, Founder</span></p>
+          </div>
+        </section>
+
+        <!-- 7. Early signs -->
+        <section class="x-band x-traction" id="traction">
+          <div class="x-wrap x-stack">
+            <p class="x-eyebrow x-reveal">Early signs</p>
+            <div class="x-nums x-reveal">
+              <div><b>600</b><span>closed-beta testers in one week</span></div>
+              <div><b>1,900</b><span>on the waitlist</span></div>
+              <div><b>$0</b><span>spent on ads</span></div>
+              <div><b>70%</b><span>of beta users still active after three weeks</span></div>
+            </div>
+            <p class="x-body x-muted x-reveal">All word of mouth, starting on one campus. Two Nigerian universities have asked to bring Veya to their students.</p>
+          </div>
+        </section>
+
+        <!-- 8. Why now -->
+        <section class="x-band x-now" id="now">
+          <div class="x-wrap x-split">
+            <div class="x-stack">
+              <p class="x-eyebrow x-reveal">Why now</p>
+              <h2 class="x-h2 x-reveal">Getting information has never been easier. Keeping it hasn't changed at all.</h2>
+            </div>
+            <div class="x-body x-lede x-reveal">
+              <p>Most tools do one job, then forget you. The opportunity is AI that sticks with you over time: your goals, what you know, and what's next.</p>
+              <p>We're building in Nigeria because we know the problem up close. <span class="x-aside">(But the problem is everywhere.)</span></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. Investors -->
+        <section class="x-band" id="investors">
+          <div class="x-wrap">
+            <div class="x-invest-card x-stack x-reveal">
+              <p class="x-eyebrow">For investors and programs</p>
+              <h2 class="x-h2">Building with us?</h2>
+              <p class="x-lede">Veya is raising a pre-seed round to rebuild around the learner model and live voice, bring on a technical cofounder, and run campus pilots to a hard retention number.</p>
+              <div class="x-actions">
+                <a class="x-btn x-btn--primary" href="https://slides.vc/share/veyaf456y54qy734j#Gu549qB9Uj1dGzkX-topRTzs3ygyh7dKBkHvw_xi_Sk" target="_blank" rel="noopener">View the deck</a>
+                <a class="x-btn x-btn--ghost" href="mailto:dbosshonour@gmail.com?subject=Veya">Email Honour</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10. Final CTA -->
+        <section class="x-band x-final x-dark" id="join">
+          <div class="x-wrap x-stack">
+            <div class="x-wave x-reveal" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <h2 class="x-h2 x-reveal">Learning should be yours. And it should stay.</h2>
+            <div class="x-actions x-reveal">
+              <a class="x-btn x-btn--primary" href="mailto:dbosshonour@gmail.com?subject=Veya%20waitlist&amp;body=Hi%2C%20I%27d%20like%20early%20access%20to%20Veya">Join the waitlist</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- 11. Footer -->
+      <footer class="x-foot">
+        <div class="x-foot__in">
+          <div class="x-stack">
+            <a class="x-logo" href="#top" aria-label="Back to top"><img src="veya_logo_clean.png" alt="Veya" width="1913" height="560" /></a>
+            <p>Knowledge moves with you.</p>
+          </div>
+          <nav class="x-foot__links" aria-label="Contact">
+            <a href="https://x.com/_onovae" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/in/honour-onovae-300b41344" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="mailto:dbosshonour@gmail.com">dbosshonour@gmail.com</a>
+          </nav>
+          <small>© 2026 Veya</small>
+        </div>
+      </footer>
+    </div>
+    <script src="hark.js"></script>
+    <script>
+      // Gentle fade-in as sections scroll into view
+      (function () {
+        var items = document.querySelectorAll(".x-reveal");
+        if (!("IntersectionObserver" in window)) {
+          items.forEach(function (el) { el.classList.add("is-in"); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+  </body>
+</html>
