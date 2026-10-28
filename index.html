@@ -1,434 +1,823 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Veya: Learning that stays</title>
-    <meta name="description" content="Veya is your own learning space that talks with you, asks you back, and remembers where you left off. So what you learn actually sticks." />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Veya: Learning that stays" />
-    <meta property="og:description" content="A more personal way to learn. Veya talks with you, asks you back, and remembers where you left off." />
-    <meta property="og:site_name" content="Veya" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Veya: Learning that stays" />
-    <meta name="theme-color" content="#F5EDE7" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap" />
-    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap" />
-    <link rel="stylesheet" href="hark.css" />
-    <link rel="stylesheet" href="hark-hero.css" />
-    <style>
-      /* ============================================================
-         VEYA BRAND: edit colors and fonts here
-         ============================================================ */
-      :root {
-        --navy: #0b1f3b;      /* main ink, dark sections */
-        --indigo: #4f46e5;    /* primary buttons, accents */
-        --indigo-deep: #4338ca;
-        --sage: #10b981;      /* secondary accent, small highlights */
-        --lavender: #e9e7ff;
-        --sand: #f5ede7;      /* page background */
-        --sand-deep: #ede2d9;
-        --slate: #64748b;     /* muted text (on sand, use --slate-ink for 4.5:1) */
-        --slate-ink: #55657a;
-        --charcoal: #1f2937;  /* body text */
-        --white: #ffffff;
-        --brand-gradient: linear-gradient(90deg, var(--indigo), var(--sage));
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Veya: Learning that stays</title>
+  <meta name="description" content="Your own learning space that talks with you, asks you back and remembers where you left off." />
+  <meta name="theme-color" content="#0B1F3B" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Veya" />
+  <meta property="og:title" content="Veya: Learning that stays" />
+  <meta property="og:description" content="Your own learning space that talks with you, asks you back and remembers where you left off." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Veya: Learning that stays" />
+  <meta name="twitter:description" content="Your own learning space that talks with you, asks you back and remembers where you left off." />
+  <link rel="icon" href="veya_logo_clean.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@500,600,700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+  <script>document.documentElement.classList.add("js");</script>
+  <style>
+    /* ============ Tokens ============ */
+    :root {
+      --text: #0B1F3B;
+      --text-muted: #5B6474;
+      --text-faint: #5F6672; /* darkened from #9AA1AC to meet 4.5:1 on every surface */
+      --surface: #F3EEE8;
+      --surface-raised: #FDFCFA;
+      --surface-sunken: #EAE4DC;
+      --border: #E4DED6;
+      --border-strong: #C9C2B8;
+      --accent: #7EE0B5;
+      --sage: #10B981;
+      --indigo: #4F46E5;
+      --amber: #F2B45A;
+      --rose: #E9897A;
 
-        --font-head: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-display: "Satoshi", "Inter", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, -apple-system, sans-serif;
 
-        /* Map the brand onto the base kit's tokens, light only */
-        color-scheme: light;
-        --sans: var(--font-body);
-        --text-primary: var(--charcoal);
-        --text-secondary: var(--slate-ink);
-        --fill-primary: var(--navy);
-        --text-primary-on: var(--white);
-        --fill-primary-on: var(--sand);
-        --fill-tertiary: var(--sand-deep);
-        --stroke-primary: rgb(11 31 59 / 0.16);
-        --stroke-secondary: rgb(11 31 59 / 0.08);
+      --r-chip: 10px;
+      --r-nav: 1rem;
+      --r-card: 1.25rem;
+      --r-card-lg: 1.5rem;
+      --r-panel: 2rem;
+      --r-hero: 3.5rem;
 
-        --x-wrap: 1120px;
-        --x-band-pad: clamp(72px, 11vw, 140px);
-      }
+      --side: 10px;
+      --max: 1440px;
+      --ease: cubic-bezier(.22, .8, .24, 1);
+    }
 
-      body { background: var(--sand); color: var(--charcoal); font: 400 17px/1.6 var(--font-body); }
-      .page { padding-block: 0; gap: 0; }
-      .main { gap: 0; }
-      :focus-visible { outline-color: var(--indigo); }
+    /* ============ Base ============ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      margin: 0;
+      background: var(--surface);
+      color: var(--text);
+      font: 400 17px/1.65 var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+    p { margin: 0; text-wrap: pretty; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, input { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; border-radius: 6px; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .ico { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .wrap { padding: 0 var(--side); }
+    .panel { max-width: var(--max); margin: 0 auto; background: var(--surface-raised); }
 
-      /* ---------- type ---------- */
-      .x-h1, .x-h2, .x-h3, .x-big { font-family: var(--font-head); color: var(--navy); letter-spacing: -0.025em; }
-      .x-h1 { font-weight: 900; font-size: clamp(48px, 9vw, 104px); line-height: 0.98; }
-      .x-h2 { font-weight: 700; font-size: clamp(34px, 5.4vw, 60px); line-height: 1.05; max-width: 18ch; }
-      .x-h3 { font-weight: 700; font-size: clamp(20px, 2vw, 24px); line-height: 1.2; letter-spacing: -0.01em; }
-      .x-eyebrow { font: 600 13px/1.3 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--indigo); }
-      .x-lede { font-size: clamp(18px, 2vw, 22px); line-height: 1.55; max-width: 36ch; }
-      .x-body { max-width: 56ch; }
-      .x-body p + p { margin-top: 1em; }
-      .x-muted { color: var(--slate-ink); }
-      .x-aside { color: var(--slate-ink); font-style: italic; }
+    /* Logo mark: crops the flowing V out of the full logo file */
+    .mark { display: inline-block; height: 1em; width: 1.51em; overflow: hidden; flex: none; }
+    .mark img { height: 1.25em; width: auto; max-width: none; margin: -0.14em 0 0 -0.2em; }
 
-      /* ---------- layout ---------- */
-      .x-band { margin-inline: calc(50% - 50vw); padding: var(--x-band-pad) var(--gutter); scroll-margin-top: 72px; }
-      .x-wrap { max-width: var(--x-wrap); margin: 0 auto; }
-      .x-stack > * + * { margin-top: clamp(20px, 2.6vw, 32px); }
-      .x-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
-      @media (max-width: 860px) { .x-split { grid-template-columns: 1fr; } }
+    /* Chip */
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: var(--r-chip);
+      background: var(--surface-sunken); color: var(--text);
+      font: 600 14px/1.3 var(--font-body);
+    }
+    .chip .ico { font-size: 16px; color: var(--sage); }
+    .chip--accent { background: var(--accent); }
+    .chip--accent .ico { color: var(--text); }
 
-      /* ---------- buttons ---------- */
-      .x-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-      .x-btn {
-        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-        min-height: 52px; padding: 0 26px; border-radius: 999px;
-        font: 600 16px/1 var(--font-body); text-decoration: none; white-space: nowrap;
-        transition: background var(--dur-quick) ease, color var(--dur-quick) ease, border-color var(--dur-quick) ease, transform var(--dur-quick) var(--ease-out);
-      }
-      .x-btn:active { transform: scale(0.98); }
-      .x-btn--primary { background: var(--indigo); color: var(--white); }
-      .x-btn--primary:hover { background: var(--brand-gradient); }
-      .x-btn--ghost { border: 1.5px solid currentColor; color: var(--navy); }
-      .x-btn--ghost:hover { background: rgb(11 31 59 / 0.06); }
-      .x-btn--light { border: 1.5px solid rgb(255 255 255 / 0.6); color: var(--white); }
-      .x-btn--light:hover { background: rgb(255 255 255 / 0.12); }
-      .x-btn--sm { min-height: 44px; padding: 0 18px; font-size: 15px; }
+    /* Headings + text */
+    .h2 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.08; }
+    .lede { color: var(--text-muted); font-size: 17px; line-height: 1.7; }
+    .center { text-align: center; }
+    .center .lede { margin-left: auto; margin-right: auto; }
 
-      /* ---------- nav ---------- */
-      .x-nav {
-        position: sticky; top: 0; z-index: 50;
-        margin-inline: calc(50% - 50vw); padding: 10px var(--gutter);
-        background: rgb(245 237 231 / 0.86);
-        -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4);
-        border-bottom: 1px solid var(--stroke-secondary);
-      }
-      .x-nav__in { max-width: var(--x-wrap); margin: 0 auto; display: flex; align-items: center; gap: 28px; }
-      .x-logo { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
-      .x-logo img { height: 34px; width: auto; clip-path: inset(0 3.2%); margin-inline: -4px; mix-blend-mode: multiply; }
-      .x-nav__links { display: flex; gap: 26px; margin-left: auto; }
-      .x-nav__links a { color: var(--navy); text-decoration: none; font-weight: 500; font-size: 15px; padding: 10px 0; }
-      .x-nav__links a:hover { color: var(--indigo); }
-      @media (max-width: 760px) {
-        .x-nav__links { display: none; }
-        .x-nav__in { justify-content: space-between; }
-        .x-logo img { height: 28px; }
-      }
+    /* ============ Nav ============ */
+    .nav {
+      position: fixed; z-index: 50; top: 10px; left: 10px; right: 10px;
+      max-width: calc(var(--max) - 20px); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 8px 8px 24px; border-radius: var(--r-nav);
+      background: color-mix(in srgb, var(--surface-raised) 92%, transparent);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid transparent; transition: border-color .3s;
+    }
+    .nav.is-scrolled { border-color: var(--border); }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font: 600 21px/1 var(--font-display); letter-spacing: -0.02em; min-height: 44px; }
+    .brand .mark { font-size: 24px; }
+    .nav__right { display: flex; align-items: center; gap: 4px; }
+    .nav__link { font-size: 15px; color: var(--text-muted); padding: 10px 14px; border-radius: 10px; transition: color .2s, background .2s; }
+    .nav__link:hover { color: var(--indigo); background: var(--surface); }
 
-      /* ---------- hero ---------- */
-      .x-hero {
-        position: relative; isolation: isolate; overflow: hidden;
-        margin-inline: calc(50% - 50vw);
-        min-height: min(88vh, 820px);
-        display: flex; align-items: center;
-        padding: 96px var(--gutter);
-        color: var(--white);
-        background: var(--navy);
-      }
-      .x-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 40%; z-index: -2; }
-      .x-hero::after {
-        content: ""; position: absolute; inset: 0; z-index: -1;
-        background: linear-gradient(90deg, rgb(11 31 59 / 0.88) 0%, rgb(11 31 59 / 0.62) 40%, rgb(11 31 59 / 0.08) 75%);
-      }
-      .x-hero .x-wrap { width: 100%; }
-      .x-hero__copy { max-width: 600px; }
-      .x-hero .x-eyebrow { color: #c7c3ff; }
-      .x-hero .x-h1 { color: var(--white); }
-      .x-hero .x-lede { color: rgb(255 255 255 / 0.9); max-width: 34ch; }
-      @media (max-width: 760px) {
-        .x-hero { align-items: flex-end; min-height: 92vh; padding-top: 220px; padding-bottom: 48px; }
-        .x-hero__img { object-position: 72% 30%; }
-        .x-hero::after { background: linear-gradient(0deg, rgb(11 31 59 / 0.94) 0%, rgb(11 31 59 / 0.75) 50%, rgb(11 31 59 / 0.1) 85%); }
-      }
+    .pill-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--text); color: #fff; border-radius: 2.5em;
+      padding: 12px 18px 12px 20px; font: 500 15px/1 var(--font-body); min-height: 44px;
+      transition: background .2s;
+    }
+    .pill-btn .ico { transition: transform .3s var(--ease); }
+    .pill-btn:hover { background: #142d52; }
+    .pill-btn:hover .ico { transform: translateX(3px); }
 
-      /* voice waveform */
-      .x-wave { display: inline-flex; align-items: center; gap: 4px; height: 32px; }
-      .x-wave span {
-        width: 4px; height: 100%; border-radius: 4px;
-        background: linear-gradient(180deg, var(--indigo), var(--sage));
-        transform-origin: center; animation: x-wave 1.4s ease-in-out infinite;
-      }
-      .x-hero .x-wave span { background: linear-gradient(180deg, #8b85ff, #34d399); }
-      .x-wave span:nth-child(2n) { animation-delay: -0.3s; }
-      .x-wave span:nth-child(3n) { animation-delay: -0.7s; }
-      .x-wave span:nth-child(5n) { animation-delay: -1.1s; }
-      .x-wave span:nth-child(4n+1) { animation-duration: 1.1s; }
-      @keyframes x-wave { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
-      @media (prefers-reduced-motion: reduce) { .x-wave span { animation: none; transform: scaleY(0.6); } }
+    /* ============ Hero ============ */
+    .hero { border-radius: 0 0 var(--r-hero) var(--r-hero); padding: 148px 24px 0; overflow: hidden; }
+    .hero__copy { max-width: 56rem; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .hero h1 { font-size: clamp(2.75rem, 8.5vw, 5.25rem); line-height: 1.02; margin-top: 24px; letter-spacing: -0.035em; }
+    .hl { background: var(--accent); color: inherit; padding: 0 0.23em; border-radius: 0.23em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .hero__sub { color: var(--text-muted); font-size: 19px; line-height: 1.6; max-width: 32rem; margin-top: 24px; }
+    .hero .wl-slot { margin-top: 36px; }
 
-      /* ---------- we believe ---------- */
-      .x-believe .x-h2 { max-width: 16ch; font-size: clamp(38px, 6.4vw, 76px); }
-      .x-cards { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
-      @media (max-width: 860px) { .x-cards { grid-template-columns: 1fr; } }
-      .x-card { border-radius: 28px; padding: clamp(28px, 4vw, 44px); background: var(--white); }
-      .x-card--stat { background: var(--navy); color: rgb(255 255 255 / 0.82); }
-      .x-stat-big { font-family: var(--font-head); font-weight: 900; letter-spacing: -0.03em; font-size: clamp(32px, 4.4vw, 50px); line-height: 1.05; color: var(--white); }
-      .x-stat-big .x-up { color: #34d399; }
-      .x-stat-big .x-down { color: #a5a0ff; }
-      .x-card--stat p + p { margin-top: 20px; }
-      .x-cap { font-size: 15px; line-height: 1.55; }
-      .x-quote { font-family: var(--font-head); font-weight: 500; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.3; color: var(--navy); letter-spacing: -0.01em; }
-      .x-quote::before { content: "\201C"; display: block; font-weight: 900; font-size: 64px; line-height: 0.6; color: var(--indigo); margin-bottom: 12px; }
-      .x-punch { font-family: var(--font-head); font-weight: 700; font-size: clamp(28px, 3.6vw, 40px); color: var(--navy); letter-spacing: -0.02em; }
-      .x-punch em { font-style: normal; color: var(--indigo); background: var(--brand-gradient) left bottom / 100% 3px no-repeat; padding-bottom: 2px; }
+    /* ============ Waitlist form (shared) ============ */
+    .wl-slot { width: 100%; max-width: 460px; }
+    .wl, .wl-done {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 8px; border-radius: var(--r-nav);
+      background: var(--surface-raised); border: 1px solid var(--border);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .wl:focus-within { border-color: var(--border-strong); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 45%, transparent); }
+    .wl input {
+      flex: 1; min-width: 0; border: 0; background: transparent; outline: none;
+      padding: 10px 12px; font-size: 16px; min-height: 44px;
+    }
+    .wl input::placeholder { color: var(--text-faint); }
+    .wl button {
+      flex: none; border: 0; cursor: pointer; min-height: 44px;
+      background: var(--text); color: #fff; border-radius: 0.7rem;
+      padding: 0 18px; font-weight: 500; font-size: 15px; transition: background .2s, color .2s, opacity .2s;
+    }
+    .wl button:hover:not(:disabled) { background: #142d52; }
+    .wl button:disabled { background: var(--surface-sunken); color: var(--text-muted); cursor: not-allowed; }
+    .wl-done { gap: 14px; padding: 10px 16px 10px 10px; text-align: left; animation: pop .45s var(--ease); }
+    .wl-done__tile { width: 44px; height: 44px; border-radius: 12px; background: var(--accent); display: grid; place-items: center; flex: none; }
+    .wl-done__tile .ico { font-size: 22px; stroke-width: 2.4; }
+    .wl-done strong { display: block; font: 600 16px/1.3 var(--font-display); }
+    .wl-done span { display: block; font-size: 14px; color: var(--text-muted); line-height: 1.4; }
+    .wl--plain, .wl-done--plain { border-color: transparent; }
+    @keyframes pop { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
 
-      /* ---------- how it works ---------- */
-      .x-how { background: var(--white); }
-      .x-photo { border-radius: 28px; overflow: hidden; aspect-ratio: 4 / 3; }
-      .x-photo img { width: 100%; height: 100%; object-fit: cover; }
-      .x-how .x-split { align-items: start; }
-      .x-how__media { position: sticky; top: 96px; }
-      .x-how__media .x-wave { margin-top: 20px; }
-      @media (max-width: 860px) { .x-how__media { position: static; } }
-      .x-steps { list-style: none; margin: 0; padding: 0; }
-      .x-steps li { display: grid; grid-template-columns: 56px 1fr; gap: 4px 16px; padding: 28px 0; border-top: 1px solid var(--stroke-secondary); }
-      .x-steps li:first-child { border-top: 0; padding-top: 0; }
-      .x-num {
-        grid-row: span 2; width: 44px; height: 44px; border-radius: 50%;
-        display: grid; place-items: center;
-        background: var(--lavender); color: var(--indigo);
-        font: 700 18px/1 var(--font-head);
-      }
-      .x-steps p { color: var(--charcoal); }
+    /* ============ Product mockup ============ */
+    .shot { max-width: 1280px; margin: 72px auto 0; }
+    .frame {
+      position: relative; aspect-ratio: 1440 / 820; overflow: hidden;
+      border: 1px solid var(--border); border-radius: 0.75rem; background: var(--surface-raised);
+    }
+    .app {
+      position: absolute; top: 0; left: 0; width: 1440px; height: 820px;
+      transform-origin: 0 0; background: var(--surface-raised);
+      display: grid; grid-template-rows: 64px 1fr; font-size: 15px;
+    }
+    .app__top { display: flex; align-items: center; justify-content: space-between; padding: 0 28px; border-bottom: 1px solid var(--border); }
+    .app__top .brand { font-size: 19px; }
+    .app__top .mark { font-size: 22px; }
+    .avatar { display: inline-flex; align-items: center; gap: 10px; padding: 5px 12px 5px 5px; border-radius: 12px; background: var(--surface-sunken); font-size: 14px; font-weight: 500; }
+    .avatar b { width: 30px; height: 30px; border-radius: 9px; background: var(--text); color: #fff; display: grid; place-items: center; font: 600 14px var(--font-display); }
+    .app__body { display: grid; grid-template-columns: 264px 1fr; min-height: 0; }
+    .side { border-right: 1px solid var(--border); padding: 20px 14px; display: flex; flex-direction: column; gap: 2px; }
+    .side__item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; color: var(--text-muted); font-weight: 500; }
+    .side__item .ico { font-size: 18px; }
+    .side__item em { margin-left: auto; font-style: normal; font-size: 13px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+    .side__item.is-active { background: var(--surface-sunken); color: var(--text); }
+    .side__label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-faint); font-weight: 600; padding: 22px 12px 8px; }
+    .sw { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 
-      /* ---------- why voice (dark) ---------- */
-      .x-dark { background: var(--navy); color: rgb(255 255 255 / 0.84); }
-      .x-dark .x-h2 { color: var(--white); }
-      .x-dark .x-eyebrow { color: #6ee7b7; }
-      .x-dark .x-lede { color: rgb(255 255 255 / 0.88); max-width: 40ch; }
+    .main { padding: 44px 56px; position: relative; }
+    .main__col { max-width: 640px; }
+    .main h3.greet { font-size: 30px; line-height: 1.15; letter-spacing: -0.02em; }
+    .main .muted { color: var(--text-muted); margin-top: 8px; font-size: 16px; }
+    .live {
+      margin-top: 28px; display: flex; align-items: center; gap: 16px;
+      padding: 10px 22px 10px 10px; border: 1.5px dashed var(--border-strong); border-radius: 999px;
+    }
+    .live__mic { width: 44px; height: 44px; border-radius: 50%; background: var(--text); color: #fff; display: grid; place-items: center; flex: none; }
+    .live__mic .ico { font-size: 20px; }
+    .live__txt { margin-left: auto; font-weight: 500; white-space: nowrap; }
+    .live__txt em { font-style: normal; color: var(--text-faint); margin-left: 14px; font-variant-numeric: tabular-nums; }
 
-      /* ---------- founder ---------- */
-      .x-story .x-body { font-size: clamp(18px, 1.8vw, 20px); line-height: 1.65; max-width: 60ch; }
-      .x-sign { display: flex; align-items: center; gap: 14px; }
-      .x-sign__line { width: 40px; height: 2px; background: var(--brand-gradient); border-radius: 2px; }
-      .x-sign b { font-family: var(--font-head); font-weight: 700; color: var(--navy); }
+    .wave { display: flex; align-items: center; gap: 3px; height: 32px; }
+    .wave i {
+      display: block; width: 3px; height: 100%; border-radius: 3px;
+      background: color-mix(in srgb, var(--sage) calc(var(--p) * 100%), var(--indigo));
+      transform: scaleY(.3); animation: wave 1.1s ease-in-out infinite; animation-delay: calc(var(--d) * -1s);
+    }
+    @keyframes wave { 0%, 100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
 
-      /* ---------- traction ---------- */
-      .x-traction { padding-top: 0; }
-      .x-nums { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--stroke-primary); }
-      .x-nums > div { padding: 32px 24px 8px 0; }
-      .x-nums b { display: block; font-family: var(--font-head); font-weight: 900; font-size: clamp(48px, 6.4vw, 80px); line-height: 1; letter-spacing: -0.04em; color: var(--navy); }
-      .x-nums span { display: block; margin-top: 12px; color: var(--slate-ink); font-size: 16px; max-width: 18ch; }
-      @media (max-width: 760px) { .x-nums { grid-template-columns: 1fr 1fr; } .x-nums > div { padding-right: 12px; } }
+    .list-label { font-size: 13px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: .08em; margin: 30px 0 8px; }
+    .rows { display: flex; flex-direction: column; }
+    .row { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .row:last-child { border-bottom: 0; }
+    .tile { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; background: var(--surface-sunken); }
+    .tile .ico { font-size: 18px; }
+    .tile--accent { background: var(--accent); }
+    .tile--indigo { background: color-mix(in srgb, var(--indigo) 14%, var(--surface-raised)); color: var(--indigo); }
+    .tile--navy { background: var(--text); color: #fff; }
+    .tile .mark { font-size: 15px; }
+    .row__txt { min-width: 0; flex: 1; }
+    .row__txt b { display: block; font-weight: 600; line-height: 1.35; }
+    .row__txt span { display: block; color: var(--text-muted); font-size: 14px; line-height: 1.4; }
+    .row time, .row .faint { color: var(--text-faint); font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
-      /* ---------- why now ---------- */
-      .x-now { background: var(--sand-deep); }
-      .x-now .x-h2 { max-width: 20ch; }
+    .know {
+      position: absolute; top: 44px; right: 48px; width: 360px;
+      background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--r-card);
+      padding: 22px; box-shadow: 0 20px 50px -30px rgba(11, 31, 59, .25);
+    }
+    .know h4 { margin: 0 0 4px; font: 600 18px/1.2 var(--font-display); }
+    .know > p { color: var(--text-muted); font-size: 14px; }
+    .bar-row { margin-top: 18px; }
+    .bar-row__top { display: flex; justify-content: space-between; font-size: 14px; font-weight: 500; }
+    .bar-row__top span { color: var(--text-faint); font-weight: 400; }
+    .bar { margin-top: 8px; height: 8px; border-radius: 99px; background: var(--surface-sunken); overflow: hidden; }
+    .bar i { display: block; height: 100%; border-radius: 99px; background: var(--sage); }
 
-      /* ---------- investors ---------- */
-      .x-invest-card { background: var(--lavender); border-radius: 32px; padding: clamp(32px, 6vw, 72px); }
-      .x-invest-card .x-eyebrow { color: var(--indigo-deep); }
+    /* ============ Why strip ============ */
+    .why { padding: 128px 0 120px; max-width: 64rem; margin: 0 auto; }
+    .why .h2 { margin-top: 20px; }
+    .why .lede { max-width: 40rem; margin-top: 18px; }
+    .why .lede small { display: block; font-size: 15px; color: var(--text-faint); margin-top: 10px; }
+    .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 12px; margin-top: 56px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 22px; border-radius: 999px; border: 1px solid var(--border-strong);
+      background: var(--surface); font: 500 clamp(15px, 1.7vw, 22px)/1.2 var(--font-display); letter-spacing: -0.01em;
+      transform: translateY(var(--y, 0)) rotate(var(--r, 0deg));
+      animation: float 6s ease-in-out infinite; animation-delay: calc(var(--d, 0) * -1s);
+    }
+    .tag .ico { color: var(--text-muted); }
+    @keyframes float {
+      0%, 100% { transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); }
+      50% { transform: translateY(calc(var(--y, 0px) - 6px)) rotate(var(--r, 0deg)); }
+    }
 
-      /* ---------- final CTA ---------- */
-      .x-final { text-align: center; }
-      .x-final .x-h2 { margin-inline: auto; max-width: 16ch; font-size: clamp(40px, 7vw, 84px); font-weight: 900; }
-      .x-final .x-actions { justify-content: center; }
-      .x-final .x-wave { justify-content: center; }
+    /* ============ Centered section intro (demo, voice) ============ */
+    .intro { max-width: 52rem; margin: 0 auto; padding: 0 24px; text-align: center; }
+    .vline { width: 1px; height: clamp(96px, 12vw, 128px); margin: 0 auto 40px; background: linear-gradient(to bottom, transparent, var(--border-strong)); }
+    .intro .lede { max-width: 36rem; margin-top: 18px; }
+    .sec { padding-top: 40px; }
 
-      /* ---------- footer ---------- */
-      .x-foot { margin-inline: calc(50% - 50vw); padding: 48px var(--gutter) 40px; border-top: 1px solid var(--stroke-secondary); }
-      .x-foot__in { max-width: var(--x-wrap); margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 24px 40px; align-items: center; }
-      .x-foot__links { display: flex; flex-wrap: wrap; gap: 4px 24px; justify-content: flex-end; }
-      .x-foot__links a { color: var(--navy); text-decoration: none; font-weight: 500; padding: 10px 0; display: inline-block; min-width: 44px; min-height: 44px; }
-      .x-foot__links a:hover { color: var(--indigo); }
-      .x-foot small { color: var(--slate-ink); font-size: 14px; }
-      @media (max-width: 760px) { .x-foot__in { grid-template-columns: 1fr; } .x-foot__links { justify-content: flex-start; } }
+    /* ============ Demo card ============ */
+    .demo {
+      max-width: 720px; margin: 56px auto 0; background: var(--surface-raised);
+      border: 1px solid var(--border); border-radius: var(--r-card); overflow: hidden; text-align: left;
+    }
+    .demo__ask { display: flex; align-items: flex-start; gap: 14px; padding: 22px 24px; border-bottom: 1px solid var(--border); }
+    .demo__ask .tile { background: var(--text); color: #fff; }
+    .demo__typed { font: 500 clamp(17px, 2.2vw, 20px)/1.45 var(--font-display); padding-top: 8px; min-height: 2.9em; }
+    .caret { display: inline-block; width: 2px; height: 1.1em; background: var(--sage); vertical-align: -0.18em; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .demo__understood { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+    .demo__understood .faint { font-size: 13px; color: var(--text-faint); font-weight: 500; margin-right: 4px; }
+    .demo__understood .chip { font-weight: 500; background: var(--surface); border: 1px solid var(--border); }
+    .demo__understood .chip.is-strong { background: var(--surface-sunken); border-color: var(--border-strong); font-weight: 600; }
+    .demo__path { padding: 12px 24px 8px; }
+    .demo__path .list-label { margin: 6px 0 2px; }
+    .demo__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 14px 24px; background: var(--surface); border-top: 1px solid var(--border); font-size: 14px; }
+    .demo__foot b { font-weight: 600; }
+    .demo__foot b kbd { font: 500 12px var(--font-body); color: var(--text-faint); margin-left: 8px; padding: 2px 6px; border: 1px solid var(--border-strong); border-radius: 6px; }
+    .demo__foot span { color: var(--text-faint); }
+    .stage { opacity: 0; transform: translateY(8px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .stage.is-on { opacity: 1; transform: none; }
+    .no-js .stage, html:not(.js) .stage { opacity: 1; transform: none; }
 
-      /* ---------- fade-in on scroll ---------- */
-      .js .x-reveal { opacity: 0; transform: translateY(18px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
-      .js .x-reveal.is-in { opacity: 1; transform: none; }
-      @media (prefers-reduced-motion: reduce) { .js .x-reveal { opacity: 1; transform: none; transition: none; } }
-    </style>
-    <script>document.documentElement.classList.add("js");</script>
-  </head>
-  <body>
-    <div class="page" id="top">
-      <!-- 1. Nav -->
-      <header class="x-nav">
-        <div class="x-nav__in">
-          <a class="x-logo" href="#top" aria-label="Veya home"><img src="veya_logo_clean.png" alt="Veya" width="1913" height="560" /></a>
-          <nav class="x-nav__links" aria-label="Main">
-            <a href="#how">How it works</a>
-            <a href="#voice">Why voice</a>
-            <a href="#investors">Investors</a>
-          </nav>
-          <a class="x-btn x-btn--primary x-btn--sm" href="mailto:dbosshonour@gmail.com?subject=Veya%20waitlist&amp;body=Hi%2C%20I%27d%20like%20early%20access%20to%20Veya">Join the waitlist</a>
+    /* ============ How it works ============ */
+    .how { border-radius: var(--r-panel); padding: clamp(40px, 7vw, 96px) clamp(20px, 6vw, 96px); margin-top: 120px; }
+    .how__grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+    .how__copy .h2 { margin-top: 20px; }
+    .how__copy .lede { margin-top: 18px; max-width: 30rem; }
+    .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .step { display: flex; align-items: center; gap: 20px; background: var(--surface); border-radius: var(--r-card-lg); padding: 20px; }
+    .step__tile { position: relative; flex: none; width: 176px; height: 96px; border-radius: 1rem; background: var(--surface-raised); overflow: hidden; }
+    .step__num { width: 30px; height: 30px; border-radius: 9px; background: var(--text); color: #fff; display: grid; place-items: center; font: 600 14px/1 var(--font-display); font-variant-numeric: tabular-nums; margin-bottom: 10px; }
+    .step h3 { font: 500 20px/1.25 var(--font-display); letter-spacing: -0.01em; }
+    .step p { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-top: 4px; }
+
+    /* Tile 1: scrolling feed */
+    .feed { position: absolute; inset: 0 14px; animation: feed 9s linear infinite; }
+    .feed i { display: flex; align-items: center; gap: 8px; height: 24px; margin-top: 8px; }
+    .feed i::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: var(--c, var(--surface-sunken)); flex: none; }
+    .feed i::after { content: ""; height: 7px; border-radius: 9px; background: var(--surface-sunken); width: var(--w, 70%); }
+    .step__tile--feed::after { content: ""; position: absolute; inset: 0; background: linear-gradient(var(--surface-raised), transparent 28%, transparent 72%, var(--surface-raised)); }
+    @keyframes feed { to { transform: translateY(-50%); } }
+
+    /* Tile 2: tap pulse */
+    .step__tile--tap { display: flex; align-items: center; justify-content: center; gap: 14px; }
+    .tap { position: relative; width: 48px; height: 48px; border-radius: 14px; background: var(--text); display: grid; place-items: center; }
+    .tap::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--accent); z-index: -1; animation: pulse 2.2s var(--ease) infinite; }
+    .tap .mark { font-size: 20px; }
+    .tap .mark img { filter: brightness(0) invert(1); }
+    .step__tile--tap { isolation: isolate; }
+    .step__tile--tap .wave { height: 22px; gap: 2px; }
+    .step__tile--tap .wave i { width: 2.5px; }
+    @keyframes pulse { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(1.7); opacity: 0; } }
+
+    /* Tile 3: where you left off */
+    .step__tile--memo { padding: 16px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    .step__tile--memo small { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); font-weight: 600; }
+    .step__tile--memo p { margin: 0; border-left: 3px solid var(--accent); padding-left: 10px; font: 500 14px/1.3 var(--font-display); color: var(--text); }
+
+    /* ============ Stats ============ */
+    .stats { max-width: 1040px; margin: 56px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .stat { background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--r-card); padding: 28px 16px; text-align: center; }
+    .stat b { display: block; font: 600 clamp(2rem, 4vw, 2.75rem)/1 var(--font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    .stat span { display: block; margin-top: 10px; font-size: 15px; color: var(--text-muted); line-height: 1.4; }
+    .stats-cap { text-align: center; color: var(--text-muted); font-size: 14px; max-width: 34rem; margin: 20px auto 0; padding: 0 24px; }
+
+    /* ============ FAQ ============ */
+    .faq { max-width: 760px; margin: 0 auto; padding: 140px 24px 120px; }
+    .faq__head { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .faq__icon { width: 52px; height: 52px; border-radius: 16px; background: var(--accent); display: grid; place-items: center; flex: none; }
+    .faq__icon .ico { font-size: 26px; }
+    .faq .lede { text-align: center; margin-top: 14px; }
+    .acc { margin-top: 44px; display: flex; flex-direction: column; gap: 8px; }
+    .qa { background: var(--surface-raised); border: 1px solid var(--border); border-radius: var(--r-card); transition: border-color .2s; }
+    .qa:hover { border-color: var(--border-strong); }
+    .qa h3 { margin: 0; }
+    .qa button {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      background: none; border: 0; cursor: pointer; text-align: left; padding: 20px 20px 20px 24px; min-height: 64px;
+      font: 600 18px/1.35 var(--font-display); letter-spacing: -0.01em; border-radius: var(--r-card);
+    }
+    .qa__pm { width: 32px; height: 32px; border-radius: 10px; background: var(--surface-sunken); display: grid; place-items: center; flex: none; }
+    .qa__pm .ico { font-size: 16px; transition: transform .35s var(--ease); }
+    .qa.is-open .qa__pm .ico { transform: rotate(45deg); }
+    .qa__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease); }
+    .qa.is-open .qa__body { grid-template-rows: 1fr; }
+    .qa__body > div { overflow: hidden; }
+    .qa__body p { padding: 0 24px 22px; color: var(--text-muted); font-size: 16px; }
+    .qa__body a { color: var(--text); font-weight: 500; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; transition: color .2s; }
+    .qa__body a:hover { color: var(--indigo); }
+    .qa__links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 10px; }
+    .qa__links a { display: inline-flex; align-items: center; min-height: 44px; }
+
+    /* ============ Closing block ============ */
+    .closing { display: flex; gap: 10px; max-width: var(--max); margin: 0 auto; }
+    .sliver { width: 48px; flex: none; background: var(--accent); border-radius: 1.75rem; opacity: .7; }
+    .closing__main { flex: 1; background: var(--accent); border-radius: 1.75rem; padding: clamp(48px, 8vw, 112px) clamp(24px, 7vw, 112px); }
+    .closing__main .h2 { max-width: 40rem; font-size: clamp(2.1rem, 5.4vw, 3.75rem); }
+    .closing__main p { color: rgba(11, 31, 59, .7); margin-top: 18px; max-width: 30rem; font-size: 18px; }
+    .closing__main .wl-slot { margin-top: 32px; }
+    .closing__main .wl:focus-within { box-shadow: 0 0 0 4px rgba(11, 31, 59, .18); }
+
+    /* ============ Footer ============ */
+    .foot { margin-top: 10px; }
+    .foot__bar { border-radius: var(--r-panel) var(--r-panel) 0 0; padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; }
+    .foot__left { display: flex; align-items: center; gap: 12px; color: var(--text-faint); font-size: 14px; }
+    .foot__left .mark { font-size: 20px; }
+    .foot__links { display: flex; flex-wrap: wrap; gap: 0 8px; }
+    .foot__links a { color: var(--text-faint); font-size: 14px; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 8px; transition: color .2s; }
+    .foot__links a:hover { color: var(--indigo); }
+
+    /* ============ Reveal on scroll ============ */
+    .js .rv { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .js .rv.in { opacity: 1; transform: none; }
+
+    /* ============ Responsive ============ */
+    @media (max-width: 1023px) {
+      .sliver { display: none; }
+      .how__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      :root { --side: 8px; }
+      .nav { top: 8px; left: 8px; right: 8px; padding-left: 16px; }
+      .nav__link { display: none; }
+      .pill-btn { padding: 11px 16px; font-size: 14px; }
+      .hero { padding: 120px 16px 0; border-radius: 0 0 2.25rem 2.25rem; }
+      .hero__sub { font-size: 17px; }
+      .shot { margin-top: 48px; }
+      .why { padding: 88px 0 80px; }
+      .tags { gap: 10px 8px; margin-top: 40px; }
+      .tag { padding: 9px 15px; gap: 8px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .step { flex-direction: column; align-items: stretch; gap: 16px; padding: 16px; }
+      .step__tile { width: 100%; height: 104px; }
+      .how { margin-top: 80px; }
+      .faq { padding: 100px 20px 80px; }
+      .faq__head { flex-direction: column; gap: 14px; text-align: center; }
+      .qa button { font-size: 17px; padding: 18px 16px 18px 20px; }
+      .qa__body p { padding: 0 20px 20px; }
+      .foot__bar { padding: 28px 24px; flex-direction: column; align-items: flex-start; }
+      .foot__links { margin-left: -8px; }
+      .demo { margin-top: 40px; }
+      .demo__ask, .demo__understood, .demo__path, .demo__foot { padding-left: 16px; padding-right: 16px; }
+      .demo__path .row time { display: none; }
+    }
+    @media (max-width: 420px) {
+      .wl { flex-direction: column; align-items: stretch; }
+      .wl button { min-height: 48px; }
+      .brand { font-size: 19px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js .rv, .stage { opacity: 1; transform: none; }
+      .wave i { transform: scaleY(calc(.3 + var(--p) * .5)); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Icon set -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12h1.5M7 8v8M11 4.5v15M15 8.5v7M19 11v2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9.5L4 20z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3.5"/><path d="M10.5 9.5l4 2.5-4 2.5z"/></symbol>
+    <symbol id="i-slides" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-head" viewBox="0 0 24 24"><path d="M4 16v-4a8 8 0 0 1 16 0v4"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h14v15H6a2 2 0 0 0-2 2 2 2 0 0 0 2 2h14"/></symbol>
+    <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.4M12 17h.01"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.2a5.5 5.5 0 0 1 3.5 5.8"/></symbol>
+    <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="13" rx="2"/><path d="M7 4h12a2 2 0 0 1 2 2v10"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-path" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></symbol>
+  </svg>
+
+  <!-- 1. Floating nav -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Veya home">
+      <span class="mark"><img src="veya_logo_clean.png" alt="" /></span>Veya
+    </a>
+    <nav class="nav__right" aria-label="Main">
+      <a class="nav__link" href="#how">How it works</a>
+      <a class="nav__link" href="#voice">Why voice</a>
+      <a class="nav__link" href="#faq">FAQ</a>
+      <a class="pill-btn" href="#waitlist">Join waitlist <svg class="ico"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- 2. Hero panel -->
+    <div class="wrap">
+      <section class="panel hero" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <span class="chip rv"><svg class="ico"><use href="#i-wave"/></svg>A learning space that remembers you</span>
+          <h1 id="hero-title" class="rv">Learning that<br /><mark class="hl">actually</mark> stays</h1>
+          <p class="hero__sub rv">You can ask AI anything. Can you remember what it said? Veya talks you through what you want to learn, asks you back, and remembers where you left off.</p>
+          <div class="wl-slot rv">
+            <form class="wl" id="waitlist" novalidate>
+              <input id="wl-email-1" type="email" aria-label="Email address" placeholder="Enter your email" autocomplete="email" required />
+              <button type="submit" disabled>Join waitlist</button>
+            </form>
+          </div>
         </div>
-      </header>
 
-      <main class="main">
-        <!-- 2. Hero -->
-        <section class="x-hero">
-          <img class="x-hero__img" src="veya-hero2.png" alt="A young woman walking down a tree-lined street at golden hour, smiling at her phone" />
-          <div class="x-wrap">
-            <div class="x-hero__copy x-stack">
-              <p class="x-eyebrow">A more personal way to learn</p>
-              <h1 class="x-h1">Learning that stays.</h1>
-              <p class="x-lede">You can ask AI anything. Can you remember what it said? Veya is your own learning space that talks with you, asks you back, and remembers where you left off. So what you learn actually sticks.</p>
-              <div class="x-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-              <div class="x-actions">
-                <a class="x-btn x-btn--primary" href="mailto:dbosshonour@gmail.com?subject=Veya%20waitlist&amp;body=Hi%2C%20I%27d%20like%20early%20access%20to%20Veya">Join the waitlist</a>
-                <a class="x-btn x-btn--light" href="#how">See how it works</a>
+        <!-- Product mockup, built at 1440x820 and scaled to fit -->
+        <div class="shot rv">
+          <div class="frame" data-scale>
+            <div class="app" aria-label="Veya app preview: a live voice session on p-values" role="img">
+              <div class="app__top">
+                <span class="brand"><span class="mark"><img src="veya_logo_clean.png" alt="" /></span>Veya</span>
+                <span class="avatar"><b>A</b>Ada</span>
+              </div>
+              <div class="app__body">
+                <aside class="side">
+                  <span class="side__item"><svg class="ico"><use href="#i-sun"/></svg>Today</span>
+                  <span class="side__item is-active"><svg class="ico"><use href="#i-grid"/></svg>My spaces<em>4</em></span>
+                  <span class="side__item"><svg class="ico"><use href="#i-bookmark"/></svg>Saved moments</span>
+                  <span class="side__label">Spaces</span>
+                  <span class="side__item"><i class="sw" style="background:var(--indigo)"></i>Statistics 201<em>12</em></span>
+                  <span class="side__item"><i class="sw" style="background:var(--sage)"></i>Organic Chemistry<em>8</em></span>
+                  <span class="side__item"><i class="sw" style="background:var(--amber)"></i>Product design<em>5</em></span>
+                  <span class="side__item"><i class="sw" style="background:var(--rose)"></i>Spanish<em>3</em></span>
+                  <span class="side__label">Progress</span>
+                  <span class="side__item"><i class="dot" style="background:var(--sage)"></i>Mastered<em>41</em></span>
+                  <span class="side__item"><i class="dot" style="background:var(--amber)"></i>Getting there<em>18</em></span>
+                  <span class="side__item"><i class="dot" style="background:var(--rose)"></i>Shaky<em>6</em></span>
+                </aside>
+                <div class="main">
+                  <div class="main__col">
+                    <h3 class="greet">Good evening, Ada</h3>
+                    <p class="muted">Day 6 of Statistics. Yesterday you stalled on p-values, so we're starting there.</p>
+                    <div class="live">
+                      <span class="live__mic"><svg class="ico"><use href="#i-mic"/></svg></span>
+                      <span class="wave" data-bars="34"></span>
+                      <span class="live__txt">Talking with Veya<em>08:42</em></span>
+                    </div>
+                    <p class="list-label">This session</p>
+                    <div class="rows">
+                      <div class="row"><span class="tile tile--navy"><span class="mark"><img src="veya_logo_clean.png" alt="" style="filter:brightness(0) invert(1)" /></span></span><span class="row__txt"><b>"If the p-value is 0.03, what does that tell you?"</b><span>Asked you back</span></span><time>now</time></div>
+                      <div class="row"><span class="tile tile--indigo"><svg class="ico"><use href="#i-mic"/></svg></span><span class="row__txt"><b>"There's a 3% chance the result is wrong?"</b><span>Close. One word off.</span></span><time>8:40</time></div>
+                      <div class="row"><span class="tile tile--navy"><span class="mark"><img src="veya_logo_clean.png" alt="" style="filter:brightness(0) invert(1)" /></span></span><span class="row__txt"><b>"It's the chance of seeing this if nothing was going on."</b><span>Fixed together</span></span><time>8:41</time></div>
+                      <div class="row"><span class="tile tile--accent"><svg class="ico"><use href="#i-bookmark"/></svg></span><span class="row__txt"><b>Saved moment: p-values, the one-word fix</b><span>Comes back on Thursday</span></span><time>8:42</time></div>
+                    </div>
+                  </div>
+                  <div class="know">
+                    <h4>What you know</h4>
+                    <p>Statistics 201</p>
+                    <div class="bar-row"><div class="bar-row__top">Probability basics<span>Mastered</span></div><div class="bar"><i style="width:100%"></i></div></div>
+                    <div class="bar-row"><div class="bar-row__top">Sampling<span>Getting there</span></div><div class="bar"><i style="width:66%;background:var(--accent)"></i></div></div>
+                    <div class="bar-row"><div class="bar-row__top">p-values<span>Working on it</span></div><div class="bar"><i style="width:33%;background:var(--amber)"></i></div></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </section>
-
-        <!-- 3. We believe -->
-        <section class="x-band x-believe" id="believe">
-          <div class="x-wrap x-stack">
-            <p class="x-eyebrow x-reveal">We believe</p>
-            <h2 class="x-h2 x-reveal">Getting an answer isn't the same as knowing it.</h2>
-            <div class="x-body x-lede x-reveal">
-              <p>AI changed how we work, write and build. Learning got left behind. We believe getting an answer is not the same as understanding it. <span class="x-aside">(Ask anyone what ChatGPT told them last month. We'll wait.)</span></p>
-            </div>
-            <div class="x-cards x-reveal">
-              <div class="x-card x-card--stat">
-                <p class="x-stat-big"><span class="x-up">+48%</span> on practice. <span class="x-down">17% worse</span> once the AI was gone.</p>
-                <p class="x-cap">Around 1,000 high school students practised maths with ChatGPT. They did better while they had it, and worse than students who never used it once it was taken away. <br /><small>Bastani et al., PNAS, 2025.</small></p>
-              </div>
-              <div class="x-card">
-                <p class="x-quote">Andrew Ng has said the way most people use AI is terrible for learning, and that even he re-asks the same questions months later.</p>
-              </div>
-            </div>
-            <p class="x-punch x-reveal">We wanna <em>change that.</em></p>
-          </div>
-        </section>
-
-        <!-- 4. How it works -->
-        <section class="x-band x-how" id="how">
-          <div class="x-wrap x-stack">
-            <p class="x-eyebrow x-reveal">How it works</p>
-            <h2 class="x-h2 x-reveal">Tell it what you want to learn. It takes it from there.</h2>
-            <div class="x-split">
-              <div class="x-how__media x-reveal">
-                <figure class="x-photo"><img src="veya-talkback.png" alt="Two students on campus steps, one talking to her phone" /></figure>
-                <div class="x-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-              </div>
-              <ol class="x-steps">
-                <li class="x-reveal"><span class="x-num">1</span><h3 class="x-h3">Tell Veya what and why.</h3><p>"I want to finally get statistics." "I have an exam in three weeks." Whatever it is.</p></li>
-                <li class="x-reveal"><span class="x-num">2</span><h3 class="x-h3">It builds your path.</h3><p>A personal curriculum, with each topic getting its own space.</p></li>
-                <li class="x-reveal"><span class="x-num">3</span><h3 class="x-h3">It talks you through it.</h3><p>Live voice you can interrupt, question and answer back. Like a patient friend who happens to know the subject.</p></li>
-                <li class="x-reveal"><span class="x-num">4</span><h3 class="x-h3">It remembers you.</h3><p>Veya keeps track of what you understand and where you stall, then decides what's next and makes the first move. Every session builds on the last.</p></li>
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        <!-- 5. Why voice -->
-        <section class="x-band x-dark" id="voice">
-          <div class="x-wrap x-split">
-            <div class="x-stack">
-              <p class="x-eyebrow x-reveal">Why voice</p>
-              <h2 class="x-h2 x-reveal">Learning shouldn't need a desk.</h2>
-              <p class="x-lede x-reveal">Voice first, because it's personal and it fits into the life you already have: the bus, the walk, the queue. Audio is where we start, not where we stop. Practice, projects and proof of what you can do come next.</p>
-            </div>
-            <figure class="x-photo x-reveal"><img src="veya-commute.png" alt="A man on a bus looking out the window at golden hour" /></figure>
-          </div>
-        </section>
-
-        <!-- 6. Founder story -->
-        <section class="x-band x-story" id="story">
-          <div class="x-wrap x-stack">
-            <p class="x-eyebrow x-reveal">Where it came from</p>
-            <h2 class="x-h2 x-reveal">It started with a course I nearly failed.</h2>
-            <div class="x-body x-reveal">
-              <p>I had a heavy AI course and way too much reading before exams. So I turned the material into audio and learned on the go, the way I listen to music and podcasts. I passed.</p>
-              <p>Then friends asked if they could pay for it. That's when I asked the real question: <strong>why does the learner always have to adapt to the format?</strong></p>
-            </div>
-            <p class="x-sign x-reveal"><span class="x-sign__line" aria-hidden="true"></span><span><b>Honour Onovae</b>, Founder</span></p>
-          </div>
-        </section>
-
-        <!-- 7. Early signs -->
-        <section class="x-band x-traction" id="traction">
-          <div class="x-wrap x-stack">
-            <p class="x-eyebrow x-reveal">Early signs</p>
-            <div class="x-nums x-reveal">
-              <div><b>600</b><span>closed-beta testers in one week</span></div>
-              <div><b>1,900</b><span>on the waitlist</span></div>
-              <div><b>$0</b><span>spent on ads</span></div>
-              <div><b>70%</b><span>of beta users still active after three weeks</span></div>
-            </div>
-            <p class="x-body x-muted x-reveal">All word of mouth, starting on one campus. Two Nigerian universities have asked to bring Veya to their students.</p>
-          </div>
-        </section>
-
-        <!-- 8. Why now -->
-        <section class="x-band x-now" id="now">
-          <div class="x-wrap x-split">
-            <div class="x-stack">
-              <p class="x-eyebrow x-reveal">Why now</p>
-              <h2 class="x-h2 x-reveal">Getting information has never been easier. Keeping it hasn't changed at all.</h2>
-            </div>
-            <div class="x-body x-lede x-reveal">
-              <p>Most tools do one job, then forget you. The opportunity is AI that sticks with you over time: your goals, what you know, and what's next.</p>
-              <p>We're building in Nigeria because we know the problem up close. <span class="x-aside">(But the problem is everywhere.)</span></p>
-            </div>
-          </div>
-        </section>
-
-        <!-- 9. Investors -->
-        <section class="x-band" id="investors">
-          <div class="x-wrap">
-            <div class="x-invest-card x-stack x-reveal">
-              <p class="x-eyebrow">For investors and programs</p>
-              <h2 class="x-h2">Building with us?</h2>
-              <p class="x-lede">Veya is raising a pre-seed round to rebuild around the learner model and live voice, bring on a technical cofounder, and run campus pilots to a hard retention number.</p>
-              <div class="x-actions">
-                <a class="x-btn x-btn--primary" href="https://slides.vc/share/veyaf456y54qy734j#Gu549qB9Uj1dGzkX-topRTzs3ygyh7dKBkHvw_xi_Sk" target="_blank" rel="noopener">View the deck</a>
-                <a class="x-btn x-btn--ghost" href="mailto:dbosshonour@gmail.com?subject=Veya">Email Honour</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 10. Final CTA -->
-        <section class="x-band x-final x-dark" id="join">
-          <div class="x-wrap x-stack">
-            <div class="x-wave x-reveal" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-            <h2 class="x-h2 x-reveal">Learning should be yours. And it should stay.</h2>
-            <div class="x-actions x-reveal">
-              <a class="x-btn x-btn--primary" href="mailto:dbosshonour@gmail.com?subject=Veya%20waitlist&amp;body=Hi%2C%20I%27d%20like%20early%20access%20to%20Veya">Join the waitlist</a>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <!-- 11. Footer -->
-      <footer class="x-foot">
-        <div class="x-foot__in">
-          <div class="x-stack">
-            <a class="x-logo" href="#top" aria-label="Back to top"><img src="veya_logo_clean.png" alt="Veya" width="1913" height="560" /></a>
-            <p>Knowledge moves with you.</p>
-          </div>
-          <nav class="x-foot__links" aria-label="Contact">
-            <a href="https://x.com/_onovae" target="_blank" rel="noopener">X</a>
-            <a href="https://www.linkedin.com/in/honour-onovae-300b41344" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="mailto:dbosshonour@gmail.com">dbosshonour@gmail.com</a>
-          </nav>
-          <small>© 2026 Veya</small>
         </div>
-      </footer>
+
+        <!-- 3. Why strip -->
+        <div class="why center">
+          <span class="chip rv"><svg class="ico"><use href="#i-q"/></svg>Why Veya</span>
+          <h2 class="h2 rv">You've asked AI a thousand things</h2>
+          <p class="lede rv">And kept almost none of it. Answers arrive instantly and leave just as fast.
+            <small>In one study, students did 48% better practising with ChatGPT, then 17% worse than non-users once it was gone. Bastani et al., PNAS 2025.</small></p>
+          <div class="tags rv" aria-label="Places your learning comes from">
+            <span class="tag" style="--r:-3deg;--y:4px;--d:0"><svg class="ico"><use href="#i-chat"/></svg>ChatGPT answer</span>
+            <span class="tag" style="--r:2deg;--y:-6px;--d:1.2"><svg class="ico"><use href="#i-play"/></svg>YouTube lecture</span>
+            <span class="tag" style="--r:-1deg;--y:8px;--d:2.4"><svg class="ico"><use href="#i-slides"/></svg>Lecture slides</span>
+            <span class="tag" style="--r:3deg;--y:-2px;--d:3.1"><svg class="ico"><use href="#i-doc"/></svg>PDF notes</span>
+            <span class="tag" style="--r:-2deg;--y:6px;--d:.6"><svg class="ico"><use href="#i-head"/></svg>Podcast</span>
+            <span class="tag" style="--r:1.5deg;--y:-8px;--d:4"><svg class="ico"><use href="#i-book"/></svg>Textbook chapter</span>
+            <span class="tag" style="--r:-2.5deg;--y:2px;--d:1.8"><svg class="ico"><use href="#i-mic"/></svg>Voice note</span>
+            <span class="tag" style="--r:2.5deg;--y:7px;--d:2.9"><svg class="ico"><use href="#i-q"/></svg>Past questions</span>
+            <span class="tag" style="--r:-1.5deg;--y:-5px;--d:.3"><svg class="ico"><use href="#i-phone"/></svg>TikTok explainer</span>
+            <span class="tag" style="--r:1deg;--y:5px;--d:3.6"><svg class="ico"><use href="#i-list"/></svg>Course outline</span>
+            <span class="tag" style="--r:-3deg;--y:-3px;--d:2.1"><svg class="ico"><use href="#i-users"/></svg>Group chat</span>
+            <span class="tag" style="--r:2deg;--y:4px;--d:4.5"><svg class="ico"><use href="#i-cards"/></svg>Flashcards</span>
+          </div>
+        </div>
+      </section>
     </div>
-    <script src="hark.js"></script>
-    <script>
-      // Gentle fade-in as sections scroll into view
-      (function () {
-        var items = document.querySelectorAll(".x-reveal");
-        if (!("IntersectionObserver" in window)) {
-          items.forEach(function (el) { el.classList.add("is-in"); });
-          return;
+
+    <!-- 4. Demo -->
+    <section class="sec" id="how-it-starts" aria-labelledby="demo-title">
+      <div class="intro">
+        <div class="vline" aria-hidden="true"></div>
+        <h2 id="demo-title" class="h2 rv">Tell it what you want to learn</h2>
+        <p class="lede rv">Say it the way you'd say it to a friend. Veya works out the goal, the time you have and where you're starting, then builds the path.</p>
+        <div class="demo rv" id="demo">
+          <div class="demo__ask">
+            <span class="tile"><svg class="ico"><use href="#i-mic"/></svg></span>
+            <p class="demo__typed"><span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
+          </div>
+          <div class="demo__understood stage" id="stage-1">
+            <span class="faint">Understood</span>
+            <span class="chip">goal: pass STA 201</span>
+            <span class="chip">time: 3 weeks</span>
+            <span class="chip is-strong">starting point: probability</span>
+          </div>
+          <div class="demo__path stage" id="stage-2">
+            <p class="list-label">Your path</p>
+            <div class="rows">
+              <div class="row"><span class="tile tile--accent"><svg class="ico"><use href="#i-path"/></svg></span><span class="row__txt"><b>Week 1: Probability, from the ground up</b><span>Short talks on the bus, two check-ins a day</span></span><span class="faint">Mon</span></div>
+              <div class="row"><span class="tile tile--indigo"><svg class="ico"><use href="#i-path"/></svg></span><span class="row__txt"><b>Week 2: Distributions and sampling</b><span>Builds on what stuck in week 1</span></span><span class="faint">Mon</span></div>
+              <div class="row"><span class="tile"><svg class="ico"><use href="#i-path"/></svg></span><span class="row__txt"><b>Week 3: Hypothesis tests, then mock exams</b><span>Veya asks, you answer, it fixes the gaps</span></span><span class="faint">Mon</span></div>
+            </div>
+          </div>
+          <div class="demo__foot stage" id="stage-3">
+            <b>Start learning<kbd>Enter</kbd></b>
+            <span>Tap to talk · Interrupt anytime · It remembers</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. How it works -->
+    <div class="wrap">
+      <section class="panel how" id="how" aria-labelledby="how-title">
+        <div class="how__grid">
+          <div class="how__copy">
+            <span class="chip chip--accent rv"><svg class="ico"><use href="#i-grid"/></svg>How it works</span>
+            <h2 id="how-title" class="h2 rv">One to one. Your own space.</h2>
+            <p class="lede rv">Every topic gets its own space. Veya teaches in live voice you can interrupt and answer back, like a patient friend who happens to know the subject.</p>
+            <p class="lede rv">Underneath, it keeps a memory of what you understand and where you stall. So it decides what's next, and makes the first move.</p>
+          </div>
+          <ol class="steps">
+            <li class="step rv">
+              <div class="step__tile step__tile--feed" aria-hidden="true">
+                <div class="feed">
+                  <i style="--c:var(--accent);--w:72%"></i><i style="--w:54%"></i><i style="--c:color-mix(in srgb,var(--indigo) 30%,white);--w:80%"></i><i style="--w:60%"></i><i style="--c:var(--amber);--w:46%"></i><i style="--w:68%"></i>
+                  <i style="--c:var(--accent);--w:72%"></i><i style="--w:54%"></i><i style="--c:color-mix(in srgb,var(--indigo) 30%,white);--w:80%"></i><i style="--w:60%"></i><i style="--c:var(--amber);--w:46%"></i><i style="--w:68%"></i>
+                </div>
+              </div>
+              <div>
+                <span class="step__num">1</span>
+                <h3>Tell it what and why</h3>
+                <p>An exam, a new job, a thing you've always wanted to get. Your words are enough.</p>
+              </div>
+            </li>
+            <li class="step rv">
+              <div class="step__tile step__tile--tap" aria-hidden="true">
+                <span class="tap"><span class="mark"><img src="veya_logo_clean.png" alt="" /></span></span>
+                <span class="wave" data-bars="12"></span>
+              </div>
+              <div>
+                <span class="step__num">2</span>
+                <h3>It talks you through it</h3>
+                <p>Live voice. Interrupt, ask, push back. It asks you back too.</p>
+              </div>
+            </li>
+            <li class="step rv">
+              <div class="step__tile step__tile--memo" aria-hidden="true">
+                <small>Where you left off</small>
+                <p>p-values, one word off<span class="caret"></span></p>
+              </div>
+              <div>
+                <span class="step__num">3</span>
+                <h3>It remembers you</h3>
+                <p>Every session builds on the last. Nothing starts from zero.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </div>
+
+    <!-- 6. Why voice -->
+    <section class="sec" id="voice" aria-labelledby="voice-title" style="padding-top:80px">
+      <div class="intro">
+        <div class="vline" aria-hidden="true"></div>
+        <h2 id="voice-title" class="h2 rv">Learning shouldn't need a desk</h2>
+        <p class="lede rv">Voice first because it's personal and it fits the life you already have: the bus, the walk, the queue. Audio is where we start, not where we stop. Practice, projects and proof of what you can do come next.</p>
+      </div>
+      <div class="stats">
+        <div class="stat rv"><b>600</b><span>beta testers in week one</span></div>
+        <div class="stat rv"><b>1,900</b><span>on the waitlist</span></div>
+        <div class="stat rv"><b>70%</b><span>still active after three weeks</span></div>
+        <div class="stat rv"><b>$0</b><span>spent on ads</span></div>
+      </div>
+      <p class="stats-cap rv">All word of mouth, starting on one campus. Two Nigerian universities have asked to bring Veya to their students.</p>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <div class="faq__head rv">
+        <span class="faq__icon"><svg class="ico"><use href="#i-q"/></svg></span>
+        <h2 id="faq-title" class="h2">Before you ask</h2>
+      </div>
+      <p class="lede rv">What people want to know before they hand over their learning.</p>
+      <div class="acc">
+        <div class="qa rv">
+          <h3><button type="button" aria-expanded="false" aria-controls="qa1" id="qa1-b">Is Veya only for students?<span class="qa__pm"><svg class="ico"><use href="#i-plus"/></svg></span></button></h3>
+          <div class="qa__body" id="qa1" role="region" aria-labelledby="qa1-b"><div><p>No. We started on campus because students learn under the most pressure. Veya is for anyone who wants to learn something and keep it.</p></div></div>
+        </div>
+        <div class="qa rv">
+          <h3><button type="button" aria-expanded="false" aria-controls="qa2" id="qa2-b">Why voice first?<span class="qa__pm"><svg class="ico"><use href="#i-plus"/></svg></span></button></h3>
+          <div class="qa__body" id="qa2" role="region" aria-labelledby="qa2-b"><div><p>Because it's the most personal way to be taught, and it doesn't need a desk. Voice is where we start. Practice, projects and proof come next.</p></div></div>
+        </div>
+        <div class="qa rv">
+          <h3><button type="button" aria-expanded="false" aria-controls="qa3" id="qa3-b">How is this different from asking ChatGPT?<span class="qa__pm"><svg class="ico"><use href="#i-plus"/></svg></span></button></h3>
+          <div class="qa__body" id="qa3" role="region" aria-labelledby="qa3-b"><div><p>ChatGPT answers and forgets you. Veya teaches, asks you back, and remembers what you know, so every session builds on the last.</p></div></div>
+        </div>
+        <div class="qa rv">
+          <h3><button type="button" aria-expanded="false" aria-controls="qa4" id="qa4-b">Where did Veya come from?<span class="qa__pm"><svg class="ico"><use href="#i-plus"/></svg></span></button></h3>
+          <div class="qa__body" id="qa4" role="region" aria-labelledby="qa4-b"><div><p>Our founder Honour nearly failed an AI course, turned the material into audio and learned on the go. He passed. Friends asked to pay. That became Veya.</p></div></div>
+        </div>
+        <div class="qa rv">
+          <h3><button type="button" aria-expanded="false" aria-controls="qa5" id="qa5-b">When can I use it?<span class="qa__pm"><svg class="ico"><use href="#i-plus"/></svg></span></button></h3>
+          <div class="qa__body" id="qa5" role="region" aria-labelledby="qa5-b"><div><p>We're rebuilding Veya around live voice and memory. Waitlist members get in first, in order.</p></div></div>
+        </div>
+        <div class="qa rv">
+          <h3><button type="button" aria-expanded="false" aria-controls="qa6" id="qa6-b">I'm an investor or run a program. Where's the deck?<span class="qa__pm"><svg class="ico"><use href="#i-plus"/></svg></span></button></h3>
+          <div class="qa__body" id="qa6" role="region" aria-labelledby="qa6-b"><div><p>We're raising a pre-seed round to rebuild around the learner model, add a technical cofounder and run campus pilots to a hard retention number.
+            <span class="qa__links"><a href="https://slides.vc/share/veyaf456y54qy734j#Gu549qB9Uj1dGzkX-topRTzs3ygyh7dKBkHvw_xi_Sk" target="_blank" rel="noopener">View the deck</a><a href="mailto:dbosshonour@gmail.com?subject=Veya">Email Honour</a></span></p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Closing block -->
+    <div class="wrap">
+      <section class="closing" aria-labelledby="close-title">
+        <div class="sliver" aria-hidden="true"></div>
+        <div class="closing__main">
+          <h2 id="close-title" class="h2 rv">Learning should be yours. And it should stay.</h2>
+          <p class="rv">Join the waitlist. We let people in order, and you'll hear from us first.</p>
+          <div class="wl-slot rv">
+            <form class="wl wl--plain" id="waitlist-2" novalidate>
+              <input id="wl-email-2" type="email" aria-label="Email address" placeholder="Enter your email" autocomplete="email" required />
+              <button type="submit" disabled>Join waitlist</button>
+            </form>
+          </div>
+        </div>
+        <div class="sliver" aria-hidden="true"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- 9. Footer -->
+  <footer class="wrap foot">
+    <div class="panel foot__bar">
+      <p class="foot__left"><span class="mark"><img src="veya_logo_clean.png" alt="" /></span>© 2026 Veya. Learning that stays.</p>
+      <nav class="foot__links" aria-label="Contact">
+        <a href="https://x.com/_onovae" target="_blank" rel="noopener">X</a>
+        <a href="https://www.linkedin.com/in/honour-onovae-300b41344" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:dbosshonour@gmail.com">dbosshonour@gmail.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* Nav border once scrolled */
+      var nav = document.getElementById("nav");
+      function onScroll() { nav.classList.toggle("is-scrolled", window.scrollY > 8); }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      /* Waveform bars */
+      document.querySelectorAll(".wave[data-bars]").forEach(function (w) {
+        var n = +w.dataset.bars;
+        for (var i = 0; i < n; i++) {
+          var b = document.createElement("i");
+          b.style.setProperty("--p", (i / (n - 1)).toFixed(3));
+          b.style.setProperty("--d", ((i * 0.37) % 1.1).toFixed(2));
+          w.appendChild(b);
         }
+      });
+
+      /* Scale the 1440x820 mockup to its frame */
+      var frame = document.querySelector("[data-scale]");
+      var app = frame.querySelector(".app");
+      function fit() { app.style.transform = "scale(" + frame.clientWidth / 1440 + ")"; }
+      fit();
+      if ("ResizeObserver" in window) new ResizeObserver(fit).observe(frame);
+      else window.addEventListener("resize", fit);
+
+      /* Reveal on scroll */
+      var items = document.querySelectorAll(".rv");
+      if (reduce || !("IntersectionObserver" in window)) {
+        items.forEach(function (el) { el.classList.add("in"); });
+      } else {
         var io = new IntersectionObserver(function (entries) {
           entries.forEach(function (e) {
-            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+            if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
           });
-        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+        }, { rootMargin: "0px 0px -8% 0px" });
         items.forEach(function (el) { io.observe(el); });
-      })();
-    </script>
-  </body>
+      }
+
+      /* Demo: type the request, then show what Veya understood */
+      var demo = document.getElementById("demo");
+      var typed = document.getElementById("typed");
+      var line = "I have a stats exam in three weeks and I'm shaky on probability";
+      var stages = ["stage-1", "stage-2", "stage-3"].map(function (id) { return document.getElementById(id); });
+      function showStages() {
+        stages.forEach(function (s, i) { setTimeout(function () { s.classList.add("is-on"); }, reduce ? 0 : 350 + i * 450); });
+      }
+      function runDemo() {
+        if (reduce) { typed.textContent = line; showStages(); return; }
+        var i = 0;
+        (function tick() {
+          typed.textContent = line.slice(0, ++i);
+          if (i < line.length) setTimeout(tick, 32 + Math.random() * 40);
+          else showStages();
+        })();
+      }
+      if ("IntersectionObserver" in window && !reduce) {
+        var dio = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { dio.disconnect(); setTimeout(runDemo, 400); }
+        }, { threshold: 0.4 });
+        dio.observe(demo);
+      } else runDemo();
+
+      /* FAQ: one open at a time */
+      var qas = document.querySelectorAll(".qa");
+      qas.forEach(function (qa) {
+        var btn = qa.querySelector("button");
+        btn.addEventListener("click", function () {
+          var open = !qa.classList.contains("is-open");
+          qas.forEach(function (o) {
+            o.classList.remove("is-open");
+            o.querySelector("button").setAttribute("aria-expanded", "false");
+          });
+          if (open) { qa.classList.add("is-open"); btn.setAttribute("aria-expanded", "true"); }
+        });
+      });
+
+      /* Waitlist forms */
+      var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      document.querySelectorAll("form.wl").forEach(function (form) {
+        var input = form.querySelector("input");
+        var btn = form.querySelector("button");
+        input.addEventListener("input", function () { btn.disabled = !EMAIL.test(input.value.trim()); });
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var email = input.value.trim();
+          if (!EMAIL.test(email)) return;
+          window.location.href = "mailto:dbosshonour@gmail.com?subject=Veya%20waitlist&body=Please%20add%20me%20to%20the%20Veya%20waitlist%3A%20" + encodeURIComponent(email);
+          var done = document.createElement("div");
+          done.className = "wl-done" + (form.classList.contains("wl--plain") ? " wl-done--plain" : "");
+          done.id = form.id;
+          done.setAttribute("role", "status");
+          done.innerHTML = '<span class="wl-done__tile"><svg class="ico"><use href="#i-check"/></svg></span><div><strong>You\'re on the list</strong><span>We\'ll be in touch before anyone else.</span></div>';
+          form.replaceWith(done);
+        });
+      });
+    })();
+  </script>
+</body>
 </html>

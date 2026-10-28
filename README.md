@@ -1,8 +1,13 @@
-# Veya website
+# Veya: Learning that stays
 
-Landing page for Veya: learning that stays.
+Landing page for Veya. One static file, no build step.
 
-Static site, no build step. Open `index.html` in a browser, or host with GitHub Pages (Settings > Pages > Deploy from branch > main / root).
+- `index.html`: the whole page. CSS (design tokens in `:root` at the top) and JavaScript are inline.
+- `veya_logo_clean.png`: logo.
 
-- Brand colours are CSS variables at the top of `index.html`.
-- Waitlist button currently opens an email to dbosshonour@gmail.com (swap for a form service like Tally or Formspree when ready).
+Fonts load from Fontshare (Satoshi) and Google Fonts (Inter).
+
+Waitlist forms open the visitor's email app (mailto). Swap in a form backend (Formspree, Tally, etc.) to collect sign-ups directly.
+
+## Hosting
+Works on GitHub Pages, Vercel or Netlify as-is. For GitHub Pages: Settings > Pages > Deploy from branch > `main` / root.
